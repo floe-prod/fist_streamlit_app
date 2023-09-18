@@ -16,7 +16,7 @@ def get_fruityvice_data(this_fruit_chioce:str):
 
 def insert_row_snowflake(new_fruit:str):
     with my_cnx.cursor() as my_cur:
-        my_cur.execute("insert into fruit_load_list values (" + f"{new_fruit} + ")")
+        my_cur.execute("insert into fruit_load_list values ('" + f"{new_fruit}" + "')")
         return "Thanks for adding " +new_fruit
 
 streamlit.title('Tutorial for my parents healty restaurant!')
