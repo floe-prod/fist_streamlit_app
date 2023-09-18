@@ -60,7 +60,7 @@ if streamlit.button('Get Fruit Load List'):
 # Add a textbox, so user can manually add a fruit to list
 desired_fruit = streamlit.text_input('What fruit would you like to add?', 'Dragonfruit')
 if streamlit.button('Add a Fruit to the List'):
-    insert_row_snowflake(desired_fruit)
-    streamlit.text(f"Thanks for your recommendation, we will try to add {desired_fruit}")
+    outtxt = insert_row_snowflake(desired_fruit)
+    streamlit.text(outtxt)
 
 
