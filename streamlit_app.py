@@ -14,6 +14,10 @@ def get_fruityvice_data(this_fruit_chioce:str):
     fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
     return fruityvice_normalized
 
+def insert_row_snowflake(new_fruit:str):
+    with my_cnx.cursor() as my_cur:
+        my_cur.execute("insert into fruit_load_list values ('" + f"{new_fruit} + "')")
+        return "Thanks for adding " +new_fruit
 
 streamlit.title('Tutorial for my parents healty restaurant!')
 streamlit.header('Breakfast Favorites')
@@ -56,9 +60,8 @@ if streamlit.button('Get Fruit Load List'):
 streamlit.stop()
 # Add a textbox, so user can manually add a fruit to list
 desired_fruit = streamlit.text_input('What fruit would you like to add?', 'Dragonfruit')
-# Help, this code writes in my DB
-my_cur.execute("select * from @fruit_load_list")
-streamlit.text(f"Thanks for your recommendation, we will try to add {desired_fruit}")
+if streamlit.button('Add a Fruit to the List'):
+    insert_row_snowflake(desired_fruit)
+    streamlit.text(f"Thanks for your recommendation, we will try to add {desired_fruit}")
 
-streamlit.dataframe(my_data_rows)
 
