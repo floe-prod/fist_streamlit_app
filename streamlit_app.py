@@ -53,6 +53,7 @@ if streamlit.button('Get Fruit Load List'):
     my_data_rows = get_fruit_load_list()
     streamlit.datafram(my_data_rows)
 
+streamlit.stop()
 # Add a textbox, so user can manually add a fruit to list
 desired_fruit = streamlit.text_input('What fruit would you like to add?', 'Dragonfruit')
 # Help, this code writes in my DB
