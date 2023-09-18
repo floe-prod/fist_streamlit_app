@@ -56,7 +56,7 @@ if streamlit.button('Get Fruit Load List'):
 # Add a textbox, so user can manually add a fruit to list
 desired_fruit = streamlit.text_input('What fruit would you like to add?', 'Dragonfruit')
 # Help, this code writes in my DB
-my_cur.execute("select * from fruit_load_list")
+my_cur.execute("select * from @fruit_load_list")
 streamlit.text(f"Thanks for your recommendation, we will try to add {desired_fruit}")
 
 streamlit.dataframe(my_data_rows)
