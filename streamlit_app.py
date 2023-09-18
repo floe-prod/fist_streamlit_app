@@ -44,7 +44,7 @@ my_data_rows = my_cur.fetchall()
 # Add a textbox, so user can manually add a fruit to list
 desired_fruit = streamlit.text_input('What fruit would you like to add?', 'Dragonfruit')
 # Help, this code writes in my DB
-my_cur.execute("insert into fruit_load_list values ('Added from streamlit'))
+my_cur.execute("insert into fruit_load_list values ('Added from streamlit')")
 streamlit.text(f"Thanks for your recommendation, we will try to add {desired_fruit}")
 
 streamlit.dataframe(my_data_rows)
