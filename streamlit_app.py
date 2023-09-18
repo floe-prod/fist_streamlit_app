@@ -4,10 +4,16 @@ import requests
 import snowflake.connector
 from urllib.error import URLError
 
+def get_fruit_load_list():
+    with my_cnx.cursor() as my_cur:
+        my_cur.execute("select * from pc_rivery_db.public.fruit_load_list")
+        return my_cur.fetchall()
+        
 def get_fruityvice_data(this_fruit_chioce:str):
     fruityvice_response = requests.get("https://fruityvice.com/api/fruit/"+this_fruit_chioce)
     fruityvice_normalized = pandas.json_normalize(fruityvice_response.json())
     return fruityvice_normalized
+
 
 streamlit.title('Tutorial for my parents healty restaurant!')
 streamlit.header('Breakfast Favorites')
@@ -41,15 +47,16 @@ except URLError as e:
 
 streamlit.write('The user entered ', fruit_choice)
 streamlit.stop()
-my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
-my_cur = my_cnx.cursor()
-my_cur.execute("select * from pc_rivery_db.public.fruit_load_list")
-my_data_rows = my_cur.fetchall()
+
+if streamlit.button('Get Fruit Load List'):
+    my_cnx = snowflake.connector.connect(**streamlit.secrets["snowflake"])
+    my_data_rows = get_fruit_load_list()
+    streamlit.datafram(my_data_rows)
 
 # Add a textbox, so user can manually add a fruit to list
 desired_fruit = streamlit.text_input('What fruit would you like to add?', 'Dragonfruit')
 # Help, this code writes in my DB
-my_cur.execute("insert into fruit_load_list values ('Added from streamlit')")
+my_cur.execute("select * from fruit_load_list")
 streamlit.text(f"Thanks for your recommendation, we will try to add {desired_fruit}")
 
 streamlit.dataframe(my_data_rows)
